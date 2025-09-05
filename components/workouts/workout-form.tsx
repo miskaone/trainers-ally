@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
-import { WorkoutInputSchema } from "@/lib/types"
+import { WorkoutInputSchema, Session } from "@/lib/types"
 
 import { BotCard } from '../workouts-utils/message'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '../ui/select'
@@ -37,7 +37,7 @@ export const defaultWorkoutInput: z.infer<typeof WorkoutInputSchema> = {
     goals: "",
   }
 
-export function WorkoutForm({ chatId, isShared }: { chatId: string | undefined, isShared: boolean }) {
+export function WorkoutForm({ chatId, isShared, session }: { chatId: string | undefined, isShared: boolean, session?: Session }) {
   const { generateWorkout } = useActions()  // AI action - invokes the LangServe runnable to start generating the first workout for the week
   const [messages, setMessages] = useUIState<typeof AI>()   // Hook to get and set the UI messages which are based on the AI state
   const [generatingUI, setGeneratingUI] = React.useState<null | React.ReactNode>(null)  // Defines the UI that displays while a workout is generating
@@ -73,9 +73,9 @@ export function WorkoutForm({ chatId, isShared }: { chatId: string | undefined, 
     }
   }, [])
 
-  // The form is disabled after the first workout is generated
+  // The form is disabled after the first workout is generated or if user is not logged in
   // Once it is disabled, it just serves as a part of the chat history to see what inputs went into the workout
-  const formDisabled = (!!generatingUI || messages.length > 0)
+  const formDisabled = (!!generatingUI || messages.length > 0 || (!isShared && !session))
   
   return (
     <>

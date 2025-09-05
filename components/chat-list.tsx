@@ -16,7 +16,7 @@ export function ChatList({ id, messages, session, isShared }: ChatList) {
   const startingMessage: UIState = [{
     id: "workout-form",
     stage: "initial",
-    display: <WorkoutForm chatId={id} isShared={isShared} />
+    display: <WorkoutForm chatId={id} isShared={isShared} session={session} />
   }]
 
   return (
@@ -37,7 +37,7 @@ export function ChatList({ id, messages, session, isShared }: ChatList) {
                 <Link href="/signup" className="underline">
                   sign up
                 </Link>{' '}
-                to save and revisit your workout history!
+                to generate workouts!
               </p>
             </div>
           </div>
