@@ -86,27 +86,17 @@ The backend of Trainer's Ally is simply a LangServe endpoint that hosts a LangGr
 
 The backend of this application is found in the backend folder at the root of this repository.
 
-All instructions below work on any OS, except for activating the virtual environment, where the command to use depending on the OS is specified.
-
 You will need to use the environment variables [defined in `backend/.env.example`](/backend/.env.example) to run the backend. Turn the .env.example file into a `.env` file, and supply the necessary environment variables. The Nvidia API Key and "Use Nvidia" (set this to 'yes' to use Nvidia NIMS) environment variables are required. The optional GROQ API Key is only there to show that other LLMs can be used. The LangChain API key is there for optional LangSmith tracing. For the KV environment variables, see the instructions below for setting up the frontend.
 
-After setting up the .env file, run the below commands to create a Python virtual environment and install the necessary Python packages to run the LangServe endpoint. Note that this requires you to already have Python (version 3.10.11 or higher) and PIP (version 23.0.1 or higher) installed on your system.
+After setting up the .env file, run the below commands to build and run the Docker container for the LangServe endpoint. Note that this requires you to already have Docker installed on your system.
 
 ```bash
-python -m venv trainers-ally-venv
-
-On Windows: .\trainers-ally-venv\Scripts\activate
-On MacOS/Linux: source trainers-ally-venv/bin/activate
-
 cd backend
-pip install -r requirements.txt
+docker build -t trainers-ally-api .
+docker run -p 8070:8070 trainers-ally-api
 ```
 
-Then, run the following Python command (while in the backend directory) to host the LangServe endpoint (/workout) on port 8000:
-
-```bash
-python trainers-ally-ai-endpoints.py
-```
+This will host the LangServe endpoint (/workout) on port 8070. The Docker container uses Python 3.11 to ensure compatibility with all dependencies.
 
 <br/>
 

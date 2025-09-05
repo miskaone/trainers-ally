@@ -36,7 +36,7 @@ using_nvidia = os.environ['USING_NVIDIA'] == "yes"
 kv_rest_api_url = os.environ["KV_REST_API_URL"]
 kv_rest_api_token = os.environ["KV_REST_API_TOKEN"]
 
-GROQ_LLM = ChatGroq(model="llama3-70b-8192")
+GROQ_LLM = ChatGroq(model="openai/gpt-oss-120b")
 NVIDIA_LLM = ChatNVIDIA(model="meta/llama3-70b-instruct")
 
 def format_workouts(workouts):
